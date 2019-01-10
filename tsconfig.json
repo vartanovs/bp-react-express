@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",                          // Include DOM Library during compilation
+      "es2015",                       // Include ES6 Library during compilation
+      "es2016",                       // Include ES7 Library during compilation
+      "es2017",                       // Include ES8 Library during compilation
+      "es2018",                       // Include ES9 Library during compilation
+      "esnext.asynciterable"          // Include latest ES library during compilation
+    ],
+    "module": "commonjs",             // Enforce Node.js standard module code generation
+    "moduleResolution": "node",       // Enforce Node.js standard module resolution strategy
+    "outDir": "build",                // Specify output structure directory
+    "removeComments": true,           // Do not emit comments during compilation
+    "rootDir": "src",                 // Specify input file root directory
+    "sourceMap": true,                // Generate .map file during compilation
+    "target": "es6",                  // Target ES2015 during compilation
+
+    // "jsx": "react",              // Uncomment when using React .tsx files
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+
+    "alwaysStrict": true,             // Emit "use Strict" for each source file
+    "esModuleInterop": true,          // Enable importStar and importDefault helpers for babel
+    "experimentalDecorators": true,   // Enable ES7 decorators
+    "noImplicitAny": true,            // Prohibit expressions with implied any type
+    "noImplicitReturns": true,        // Enforce function return statements for all code paths
+    "noImplicitThis": true,           // Prohibit 'this' expressions with implied any type
+    "noUnusedLocals": true,           // Prohibit unused variables declarations
+    "noUnusedParameters": true,       // Prohibit unused function parameters
+    "preserveConstEnums": true,       // Retain const enum declarations
+    "strictFunctionTypes": true,      // Prohibit bivariant function parameter checking 
+    "strictNullChecks": true          // Null/Undefined only assignable to themselves, void and any
+  },
+  "exclude": [
+    "node_modules",                   // Do not compile dependencies
+    "./src/**/*.test.ts"              // Do not compile test files
+  ],    
+  "include": [
+    "./src/**/*.ts"                   // Compile all source code .ts files
+    // "./src/**/*.tsx"             // Uncomment when using React .tsx files
+  ]
+}

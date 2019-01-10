@@ -1,0 +1,32 @@
+{
+  "name": "react-express-docker-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for React + Express Projects in TypeScript with Docker Containerization",
+  "main": "src/server/index.ts",
+  "scripts": {
+    "start": "ts-node src/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vartanovs/react-express-docker-boilerplate.git"
+  },
+  "author": "Serge Vartanov <vartanov.s@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vartanovs/react-express-docker-boilerplate/issues"
+  },
+  "homepage": "https://github.com/vartanovs/react-express-docker-boilerplate#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.12.18",
+    "tslint": "^5.12.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.17.0"
+  }
+}

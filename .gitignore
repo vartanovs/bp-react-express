@@ -1,0 +1,11 @@
+# Build directory
+build/
+
+# Coverage directory
+coverage/
+
+# Dependency directories
+node_modules/
+
+# Dotenv environment variables file
+.env
