@@ -4,7 +4,10 @@
   "description": "Boilerplate for React + Express Projects in TypeScript with Docker Containerization",
   "main": "src/server/index.ts",
   "scripts": {
-    "start": "ts-node src/server",
+    "build:dev": "webpack --config ./webpack/dev.config.js",
+    "build:prod": "webpack --config ./webpack/prod.config.js",
+    "dev-client": "webpack-dev-server --config ./webpack/dev.config.js --hot",
+    "start": "NODE_ENV=production ts-node src/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,14 +22,24 @@
   "homepage": "https://github.com/vartanovs/react-express-docker-boilerplate#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@types/express": "^4.16.0",
     "@types/node": "^10.12.18",
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "html-webpack-plugin": "^3.2.0",
+    "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "tslint-config-airbnb": "^5.11.1",
-    "tslint-config-prettier": "^1.17.0"
+    "tslint-config-prettier": "^1.17.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   }
 }

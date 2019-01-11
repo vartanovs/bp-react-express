@@ -16,7 +16,7 @@
     "sourceMap": true,                // Generate .map file during compilation
     "target": "es6",                  // Target ES2015 during compilation
 
-    // "jsx": "react",              // Uncomment when using React .tsx files
+    "jsx": "react",                   // Support JSX in .tsx files
     "typeRoots": ["./node_modules/@types", "./src/@types"],
 
     "alwaysStrict": true,             // Emit "use Strict" for each source file
@@ -36,7 +36,7 @@
     "./src/**/*.test.ts"              // Do not compile test files
   ],    
   "include": [
-    "./src/**/*.ts"                   // Compile all source code .ts files
-    // "./src/**/*.tsx"             // Uncomment when using React .tsx files
+    "./src/**/*.ts",                  // Compile all source code .ts files
+    "./src/**/*.tsx"                  // Compile all source code .tsx files
   ]
 }
