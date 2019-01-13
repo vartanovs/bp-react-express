@@ -6,6 +6,9 @@
   "scripts": {
     "build:dev": "webpack --config ./webpack/dev.config.js",
     "build:prod": "webpack --config ./webpack/prod.config.js",
+    "dep-add": "bash ./scripts/dep-add.sh",
+    "dep-remove": "bash ./scripts/dep-remove.sh",
+    "dep-update": "bash ./scripts/dep-update.sh",
     "dev-client": "webpack-dev-server --config ./webpack/dev.config.js --hot",
     "dev-server": "NODE_ENV=development nodemon",
     "docker-dev": "docker-compose -f docker/docker-compose-dev.yml up",
