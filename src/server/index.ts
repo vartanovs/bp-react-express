@@ -6,6 +6,11 @@
 // Import active server
 import app from './app';
 
+// Import database clients - as needed
+// import mongoClient from './mongoClient';
+// import postgresClient from './postgresClient';
+// import redisClient from './redisClient';
+
 // Specify PORT (if not specified in ENV)
 const PORT = process.env.PORT || '3000';
 

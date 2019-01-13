@@ -11,9 +11,7 @@ services:
     volumes:
       - ../:/usr/src/app
       - coverage:/usr/src/app/coverage
-      - node_modules:/usr/src/app/node_modules
     command: ["npm", "run", "test-coverage"]
 
 volumes:
   coverage:
-  node_modules:
