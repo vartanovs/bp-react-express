@@ -1,0 +1,26 @@
+# command to run: docker-compose -f docker/docker-compose-dev.yml up
+
+version: "3"
+
+services:
+  client:
+    image: vartanovs/ern-boilerplate-dev
+    container_name: "ern-boilerplate-client"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: ["npm", "run", "dev-client"]
+  server:
+    image: vartanovs/ern-boilerplate-dev
+    container_name: "ern-boilerplate-server"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: ["npm", "run", "dev-server"]
+
+volumes:
+  node_modules:

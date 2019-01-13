@@ -1,0 +1,12 @@
+build
+coverage
+node_modules
+
+Dockerfile
+*.Dockerfile
+docker-compose*
+
+.DS_Store
+.dockerignore
+README.md
+LICENSE

@@ -1,0 +1,19 @@
+# command to run: docker-compose -f docker/docker-compose-test.yml up
+
+version: "3"
+
+services:
+  test:
+    image: vartanovs/ern-boilerplate
+    container_name: "ern-boilerplate-test"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../:/usr/src/app
+      - coverage:/usr/src/app/coverage
+      - node_modules:/usr/src/app/node_modules
+    command: ["npm", "run", "test-coverage"]
+
+volumes:
+  coverage:
+  node_modules:
