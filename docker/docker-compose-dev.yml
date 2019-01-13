@@ -1,26 +1,66 @@
 # command to run: docker-compose -f docker/docker-compose-dev.yml up
+# command to enter mongo: docker container exec -it ern-boilerplate-mongo mongo -u dev (exit to exit)
+# command to enter postgres: docker container exec -it ern-boilerplate-postgres psql -U dev (exit to exit)
+# command to enter redis: docker container exec -it ern-boilerplate-redis redis-cli (exit to exit)
 
 version: "3"
 
 services:
   client:
-    image: vartanovs/ern-boilerplate-dev
     container_name: "ern-boilerplate-client"
+    image: vartanovs/ern-boilerplate-dev
     ports:
       - "8080:8080"
+    restart: always
     volumes:
       - ../:/usr/src/app
       - node_modules:/usr/src/app/node_modules
     command: ["npm", "run", "dev-client"]
   server:
-    image: vartanovs/ern-boilerplate-dev
     container_name: "ern-boilerplate-server"
+    image: vartanovs/ern-boilerplate-dev
     ports:
       - "3000:3000"
+    restart: always
     volumes:
       - ../:/usr/src/app
       - node_modules:/usr/src/app/node_modules
     command: ["npm", "run", "dev-server"]
-
+    depends_on:
+      - mongo
+      - postgres
+      - redis
+  mongo:
+    container_name: "ern-boilerplate-mongo"
+    env_file:
+      - ../.env/mongo.dev.env
+    image: mongo:4.0-xenial
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - mongo_dev:/data/db
+  postgres:
+    container_name: "ern-boilerplate-postgres"
+    env_file:
+      - ../.env/postgres.dev.env
+    image: postgres:11.1-alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - postgres_dev:/var/lib/postgresql/data
+  redis:
+    container_name: "ern-boilerplate-redis"
+    image: redis:5.0-alpine
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - redis_dev:/data
+      
 volumes:
+  mongo_dev:
+  postgres_dev:
+  redis_dev:
   node_modules:
