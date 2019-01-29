@@ -7,6 +7,4 @@ services:
     image: vartanovs/ern-boilerplate
     ports:
       - "3000:3000"
-    volumes:
-      - ./:/usr/src/app
     command: ["npm", "start"]

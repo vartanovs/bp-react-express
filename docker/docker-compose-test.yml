@@ -1,4 +1,6 @@
-# command to run: docker-compose -f docker/docker-compose-test.yml up
+# This will start a ern-boilerplate-dev container named ern-boilerplate-test and run 'npm run test:coverage'
+# Command to run: docker-compose -f docker/docker-compose-test.yml up --abort-on-container-exit
+# NPM Script: npm run docker-test
 
 version: "3"
 
@@ -9,7 +11,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ../:/usr/src/app
       - coverage:/usr/src/app/coverage
     command: ["npm", "run", "test:coverage"]
 

@@ -1,3 +1,8 @@
+# This will start two ern-boilerplate-dev containers named ern-boilerplate-client and ern-boilerplate-server
+# ern-boilerplate-client will run "npm run dev-client" which will initiate the Webpack Dev Server
+# ern-boilerplate-server will run "npm run dev-server" which will initiate Nodemon
+# NPM Script: npm run docker-dev
+
 # command to run: docker-compose -f docker/docker-compose-dev.yml up
 # command to enter mongo: docker container exec -it ern-boilerplate-mongo mongo -u dev (exit to exit)
 # command to enter postgres: docker container exec -it ern-boilerplate-postgres psql -U dev (exit to exit)
