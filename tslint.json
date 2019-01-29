@@ -10,6 +10,7 @@
     "align": true,                      // Enforce vertical alignment
     "class-name": true,                 // Enforce PascalCased class and interface names
     "eofline": true,                    // Ensure files end with a newline
+    "import-name": false,               // Permit misnamed default imports
     "indent": [true, "spaces", 2],      // Enforce two-space indentation
     "max-line-length": [true, 120],     // Enforce line limit to 120 characters
     "member-access": true,              // Require explicit visibility declarations for class members  
@@ -22,6 +23,7 @@
     "no-trailing-whitespace": true,     // Disallow trailing spaces at end of line
     "no-unused-expression": true,       // Disallow unused expressions
     "no-var-keyword": true,             // Disallow var for variable declarations
+    "object-literal-sort-keys": false,  // Permit object literal keys to be in non-alpha order
     "prefer-const": true,               // Prefer const over let for variable delcarations
     "quotemark": [true, "single"],      // Require strings to be single-quoted
     "semicolon": [true, "always"],      // Require semicolons at end of every statement
@@ -33,7 +35,10 @@
       }
     ],
     "typedef": true,                    // Enforce inclusion of type definitions
-    "variable-name": true,              // Check variable names for camelCasing and keywords   
+    "variable-name": [
+      true,                             // Check variable names for camelCasing and keywords   
+      "allow-pascal-case"               // Permit Pascal Case for React JSX Elements
+    ], 
     "whitespace": true                  // Enforce whitespace style conventions
   },
   "rulesDirectory": []
