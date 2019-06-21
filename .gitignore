@@ -1,6 +1,9 @@
 # Build directory
 build/
 
+# Cache directory
+.cache/
+
 # Coverage directory
 coverage/
 
@@ -12,3 +15,9 @@ package-lock.json
 
 # Environment variables
 .env/
+
+# IDE configuration
+.vscode/
+
+# OS Generated Files
+.DS_Store
