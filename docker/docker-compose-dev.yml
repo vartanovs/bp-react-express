@@ -30,26 +30,26 @@ services:
       - ../:/usr/src/app
     command: ["npm", "run", "dev-server"]
     depends_on:
-      - dynamo
-      - mongo
+      # - dynamo
+      # - mongo
       - postgres
-      - redis
-  dynamo:
-    container_name: "ern-boilerplate-dynamo"
-    image: amazon/dynamodb-local:1.11.477
-    ports:
-      - "8000:8000"
-    restart: always
-  mongo:
-    container_name: "ern-boilerplate-mongo"
-    env_file:
-      - ../.env/mongo.dev.env
-    image: mongo:4.0-xenial
-    ports:
-      - "27017:27017"
-    restart: always
-    volumes:
-      - mongo_dev:/data/db
+      # - redis
+  # dynamo:
+  #   container_name: "ern-boilerplate-dynamo"
+  #   image: amazon/dynamodb-local:1.11.477
+  #   ports:
+  #     - "8000:8000"
+  #   restart: always
+  # mongo:
+  #   container_name: "ern-boilerplate-mongo"
+  #   env_file:
+  #     - ../.env/mongo.dev.env
+  #   image: mongo:4.0-xenial
+  #   ports:
+  #     - "27017:27017"
+  #   restart: always
+  #   volumes:
+  #     - mongo_dev:/data/db
   postgres:
     container_name: "ern-boilerplate-postgres"
     env_file:
@@ -60,16 +60,16 @@ services:
     restart: always
     volumes:
       - postgres_dev:/var/lib/postgresql/data
-  redis:
-    container_name: "ern-boilerplate-redis"
-    image: redis:5.0-alpine
-    ports:
-      - "6379:6379"
-    restart: always
-    volumes:
-      - redis_dev:/data
+  # redis:
+  #   container_name: "ern-boilerplate-redis"
+  #   image: redis:5.0-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   restart: always
+  #   volumes:
+  #     - redis_dev:/data
       
 volumes:
-  mongo_dev:
+  # mongo_dev:
   postgres_dev:
-  redis_dev:
+  # redis_dev:
