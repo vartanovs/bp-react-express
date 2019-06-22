@@ -2,8 +2,6 @@
 # 2. Rebuild images with updated package.json
 # 3. Push images to Docker Hub
 
-echo -e "\033[1;33m'CTRL + Z' to kill this script\033[0m"
-
 echo -e "\033[1;36mRemoving existing images from local environment...\033[0m"
 docker image rm vartanovs/ern-boilerplate --force
 docker image rm vartanovs/ern-boilerplate-dev --force

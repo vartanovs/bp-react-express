@@ -36,7 +36,7 @@ services:
       - redis
   dynamo:
     container_name: "ern-boilerplate-dynamo"
-    image: amazon/dynamodb-local:latest
+    image: amazon/dynamodb-local:1.11.477
     ports:
       - "8000:8000"
     restart: always
@@ -54,7 +54,7 @@ services:
     container_name: "ern-boilerplate-postgres"
     env_file:
       - ../.env/postgres.dev.env
-    image: postgres:11.1-alpine
+    image: postgres:11.4-alpine
     ports:
       - "5432:5432"
     restart: always

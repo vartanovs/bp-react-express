@@ -3,16 +3,17 @@
  * @description Server Declaration
  */
 
-import path from 'path';
+import * as path from 'path';
 
 // Import Express Module
-import express, { Request, Response } from 'express';
+import * as express from 'express';
+import { Request, Response } from 'express';
 
 // Invoke Express Server
-  const app = express();
+const app = express();
 
 // Respond to GET Requests to root '/' by serving React Bundle
-  app.use(express.static(path.resolve(__dirname, '../../build')));
+app.use(express.static(path.resolve(__dirname, '../../build')));
 
 // Respond to all other requests with 404 status and 'route not found' message
 app.use('*',

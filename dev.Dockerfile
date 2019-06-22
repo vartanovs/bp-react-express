@@ -1,5 +1,5 @@
 # Set base image to Node LTS (10.15.0 as of 2019-01-11) Alpine
-FROM node:10.15.0-alpine
+FROM node:10.16.0-alpine
 
 # Add bash shell
 RUN apk update && apk upgrade && apk add bash

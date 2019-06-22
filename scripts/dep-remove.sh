@@ -3,8 +3,6 @@
 # 3. Rebuild images with updated package.json
 # 4. Push images to Docker Hub
 
-echo -e "\033[1;33m'CTRL + Z' to kill this script\033[0m"
-
 # If first argument is dev and second argument is not empty
 if [ $1 = "dev" ] && [ ! -z $2 ]; then
   DEV=true
