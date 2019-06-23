@@ -30,16 +30,16 @@ services:
       - ../:/usr/src/app
     command: ["npm", "run", "dev-server"]
     depends_on:
-      # - dynamo
+      - dynamo
       - mongo
       - postgres
       - redis
-  # dynamo:
-  #   container_name: "ern-boilerplate-dynamo"
-  #   image: amazon/dynamodb-local:1.11.477
-  #   ports:
-  #     - "8000:8000"
-  #   restart: always
+  dynamo:
+    container_name: "ern-boilerplate-dynamo"
+    image: amazon/dynamodb-local:1.11.477
+    ports:
+      - "8000:8000"
+    restart: always
   mongo:
     container_name: "ern-boilerplate-mongo"
     env_file:

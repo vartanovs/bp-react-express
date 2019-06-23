@@ -9,15 +9,30 @@ import * as path from 'path';
 import * as express from 'express';
 import { Request, Response } from 'express';
 
+import dynamoClient from './dynamoClient';
 import mongoClient from './mongoClient';
 import postgresClient from './postgresClient'; 
-import redisClient from './redisClient'; 
+import redisClient from './redisClient';
+
+import { AttributeDefinition, KeySchemaElement } from 'aws-sdk/clients/dynamodb';
 
 // Invoke Express Server
 const app = express();
 
 // Respond to GET Requests to root '/' by serving React Bundle
 app.use(express.static(path.resolve(__dirname, '../../build')));
+
+// GET /dynamo - test route for dynamo client
+app.get('/dynamo',
+  async(_: Request, res: Response) => {
+    const timeStampAttribute: AttributeDefinition = { "AttributeName": "now", "AttributeType": "S" };
+    const timestampSchema: KeySchemaElement = { "AttributeName": "now", "KeyType": "HASH" };
+    await dynamoClient.createTable('timestamps', [timeStampAttribute], [timestampSchema]);
+    await dynamoClient.putItem('timestamps', {"now": { "S": new Date().toISOString() } })
+    const dynamoNow = await dynamoClient.getAll('timestamps')
+    await dynamoClient.deleteTable('timestamps');
+    res.send(dynamoNow.Items!.pop());
+  })
 
 // GET /mongo - test route for mongo client
 app.get('/mongo',
@@ -26,14 +41,14 @@ app.get('/mongo',
     await client.deleteAll('timestamps');
     await client.insertOne('timestamps', { now: new Date().toISOString() });
     const mongoNow = await client.findAll('timestamps');
-    res.send(mongoNow[0]);
+    res.send(mongoNow.pop());
   })
 
 // GET /postgres - test route for postgres client
 app.get('/postgres',
   async(_: Request, res: Response) => {
     const response = await postgresClient.query('SELECT NOW();');
-    const postgresNow = response.rows[0];
+    const postgresNow = response.rows.pop();
     res.send(postgresNow);
   })
 
