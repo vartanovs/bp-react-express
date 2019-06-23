@@ -33,7 +33,7 @@ services:
       # - dynamo
       # - mongo
       - postgres
-      # - redis
+      - redis
   # dynamo:
   #   container_name: "ern-boilerplate-dynamo"
   #   image: amazon/dynamodb-local:1.11.477
@@ -60,16 +60,16 @@ services:
     restart: always
     volumes:
       - postgres_dev:/var/lib/postgresql/data
-  # redis:
-  #   container_name: "ern-boilerplate-redis"
-  #   image: redis:5.0-alpine
-  #   ports:
-  #     - "6379:6379"
-  #   restart: always
-  #   volumes:
-  #     - redis_dev:/data
+  redis:
+    container_name: "ern-boilerplate-redis"
+    image: redis:5.0-alpine
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - redis_dev:/data
       
 volumes:
   # mongo_dev:
   postgres_dev:
-  # redis_dev:
+  redis_dev:

@@ -12,7 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
 class PostgresClient {
   private config: PoolConfig = {};
-  private pool: pg.Pool = new pg.Pool();
+  private pool: pg.Pool|undefined;
 
   public init() {
     // Extract postgres configuration from .env
@@ -27,12 +27,12 @@ class PostgresClient {
     this.pool.on('connect', () => console.log('Connected to Postgres DB'));
     this.pool.on('error', (err: Error) => console.error('Postgres DB Client Error: ', err));
 
-    console.log('Postgres DB Client configuration complete');
+    console.log('Postgres DB Client Configuration Complete');
     return this;
   }
 
   public async query(sqlStatement: string, sqlParams?: string[]) {
-    const client = await this.pool.connect();
+    const client = await this.pool!.connect();
     const response = sqlParams? await client.query(sqlStatement, sqlParams) : await client.query(sqlStatement);
     client.release();
     return response;
