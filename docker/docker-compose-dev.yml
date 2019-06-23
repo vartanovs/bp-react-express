@@ -31,7 +31,7 @@ services:
     command: ["npm", "run", "dev-server"]
     depends_on:
       # - dynamo
-      # - mongo
+      - mongo
       - postgres
       - redis
   # dynamo:
@@ -40,16 +40,16 @@ services:
   #   ports:
   #     - "8000:8000"
   #   restart: always
-  # mongo:
-  #   container_name: "ern-boilerplate-mongo"
-  #   env_file:
-  #     - ../.env/mongo.dev.env
-  #   image: mongo:4.0-xenial
-  #   ports:
-  #     - "27017:27017"
-  #   restart: always
-  #   volumes:
-  #     - mongo_dev:/data/db
+  mongo:
+    container_name: "ern-boilerplate-mongo"
+    env_file:
+      - ../.env/mongo.dev.env
+    image: mongo:4.0-xenial
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - mongo_dev:/data/db
   postgres:
     container_name: "ern-boilerplate-postgres"
     env_file:
@@ -70,6 +70,6 @@ services:
       - redis_dev:/data
       
 volumes:
-  # mongo_dev:
+  mongo_dev:
   postgres_dev:
   redis_dev:

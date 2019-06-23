@@ -1,6 +1,6 @@
 /**
  * @module server/postgresClient.ts
- * @description PostgreSQL Connection
+ * @description PostgreSQL Client
  */
 
 import * as path from 'path';
@@ -41,5 +41,4 @@ class PostgresClient {
 
 // Instantiate and initialize pool then export instance
 const postgresClient = new PostgresClient().init();
-
 export default postgresClient;

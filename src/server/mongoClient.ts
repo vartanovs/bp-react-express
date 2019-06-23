@@ -1,6 +1,6 @@
 /**
  * @module server/mongoClient.ts
- * @description MongoDB Connection
+ * @description MongoDB Client
  */
 
 import * as mongodb from 'mongodb';
@@ -9,20 +9,53 @@ import * as path from 'path';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
-// Extract Mongo Client configuration from .env
-const username: string = process.env.MONGO_USERNAME as string;
-const password: string = process.env.MONGO_PASSWORD as string;
-const host: string = process.env.MONGO_HOST as string;
-const port: string = process.env.MONGO_PORT as string;
-const uri: string = `mongodb://${username}:${password}@${host}:${port}`;
+class MongoClient {
+  // private config: mongodb.MongoClientOptions = {};
+  private client: mongodb.MongoClient|undefined;
+  private db: mongodb.Db|undefined;
+  private dbName: string|undefined;
+  private uri: string|undefined;
 
-// Create new Mongo Client
-const mongoClient = new mongodb.MongoClient(uri);
+  public async init() {
+      // Extract mongo configuration from .env
+      const user = process.env.MONGO_INITDB_ROOT_USERNAME;
+      const password = process.env.MONGO_INITDB_ROOT_PASSWORD;
+      const host = process.env.MONGO_HOST;
+      const port = Number(process.env.MONGO_PORT);
+      this.dbName = process.env.MONGO_INITDB_DATABASE;
+      this.uri = `mongodb://${user}:${password}@${host}:${port}`;
 
-// Log Successful Connection or Error
-mongoClient.connect((err) => {
-  if (err) return console.error('MongoDB Error: ', err);
-  console.log('Connected To MongoDB');
-});
+      // Create new Mongo Client and DB
+      this.client = await mongodb.MongoClient.connect(this.uri)
+      this.db = this.client.db(this.dbName);
 
+      this.client.on('connect', () => console.log('Connected to Mongo DB'));
+      this.client.on('error', (err: Error) => console.error('Mongo DB Client Error: ', err));
+
+      return this;
+  }
+
+  public async deleteAll(collectionName: string) {
+    const deletedItems = await this.db!.collection(collectionName).deleteMany({});
+    return deletedItems.result;
+  }
+
+  public async insertOne<T>(collectionName: string, item: T) {
+    const insertedItem = await this.db!.collection(collectionName).insertOne(item);
+    return insertedItem.ops;
+  }
+
+  public async insertMany<T>(collectionName: string, items: T[]) {
+    const insertedItems = await this.db!.collection(collectionName).insertMany(items);
+    return insertedItems.ops;
+  }
+
+  public async findAll(collectionName: string) {
+    const foundItems = await this.db!.collection(collectionName).find({}).toArray();
+    return foundItems;
+  }
+}
+
+// Instantiate and initialize client then export instance
+const mongoClient = new MongoClient().init();
 export default mongoClient;

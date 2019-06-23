@@ -1,6 +1,6 @@
 /**
  * @module server/redisClient.ts
- * @description Redis Connection
+ * @description Redis Client
  */
 
 import * as path from 'path';

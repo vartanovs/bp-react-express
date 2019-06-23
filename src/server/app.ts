@@ -9,6 +9,7 @@ import * as path from 'path';
 import * as express from 'express';
 import { Request, Response } from 'express';
 
+import mongoClient from './mongoClient';
 import postgresClient from './postgresClient'; 
 import redisClient from './redisClient'; 
 
@@ -17,6 +18,16 @@ const app = express();
 
 // Respond to GET Requests to root '/' by serving React Bundle
 app.use(express.static(path.resolve(__dirname, '../../build')));
+
+// GET /mongo - test route for mongo client
+app.get('/mongo',
+  async(_: Request, res: Response) => {
+    const client = await mongoClient;
+    await client.deleteAll('timestamps');
+    await client.insertOne('timestamps', { now: new Date().toISOString() });
+    const mongoNow = await client.findAll('timestamps');
+    res.send(mongoNow[0]);
+  })
 
 // GET /postgres - test route for postgres client
 app.get('/postgres',
