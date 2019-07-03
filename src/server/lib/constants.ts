@@ -3,6 +3,11 @@
  * @description Constant Values
  */
 
+export enum MONGO_MESSAGES {
+  CONNECT = 'Connected to Mongo DB',
+  ERROR = 'Mongo DB Error: ',
+}
+
 export enum REDIS_MESSAGES {
   CONNECT = 'Connected to Redis Server',
   READY = 'Redis Server ready to receive commands',

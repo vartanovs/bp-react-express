@@ -7,6 +7,7 @@ import * as mongodb from 'mongodb';
 import * as path from 'path';
 
 import * as dotenv from 'dotenv';
+import { MONGO_MESSAGES } from './constants';
 dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
 class MongoClient {
@@ -29,8 +30,8 @@ class MongoClient {
       this.client = await mongodb.MongoClient.connect(this.uri)
       this.db = this.client.db(this.dbName);
 
-      this.client.on('connect', () => console.log('Connected to Mongo DB'));
-      this.client.on('error', (err: Error) => console.error('Mongo DB Client Error: ', err));
+      this.client.on('connect', () => console.log(MONGO_MESSAGES.CONNECT));
+      this.client.on('error', (err: Error) => console.error(MONGO_MESSAGES.ERROR, err));
 
       return this;
   }
