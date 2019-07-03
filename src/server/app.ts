@@ -4,16 +4,14 @@
  */
 
 import * as path from 'path';
-
-// Import Express Module
 import * as express from 'express';
+
+import dynamoClient from './lib/dynamoClient';
+import mongoClient from './lib/mongoClient';
+import postgresClient from './lib/postgresClient'; 
+import redisClient from './lib/redisClient';
+
 import { Request, Response } from 'express';
-
-import dynamoClient from './dynamoClient';
-import mongoClient from './mongoClient';
-import postgresClient from './postgresClient'; 
-import redisClient from './redisClient';
-
 import { AttributeDefinition, KeySchemaElement } from 'aws-sdk/clients/dynamodb';
 
 // Invoke Express Server
