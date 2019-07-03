@@ -7,6 +7,8 @@ import * as path from 'path';
 import * as Redis from 'ioredis';
 
 import * as dotenv from 'dotenv';
+import { REDIS_MESSAGES } from './constants';
+
 dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
 class RedisClient {
@@ -20,11 +22,12 @@ class RedisClient {
 
     // Log Successful Connection or Error
     this.client = new Redis(this.config);
-    this.client.on('close', () => console.log('Connection to Redis Server has Closed'));
-    this.client.on('connect', () => console.log('Connected To Redis Server'));
-    this.client.on('ready', () => console.log('Redis Cache Ready to Receive Commands'));
-    this.client.on('reconnecting', () => console.log('Reconnected To Redis Server'));
-    this.client.on('error', (err: Error) => console.error('Redis Error: ', err));
+    this.client.on('connect', () => console.log(REDIS_MESSAGES.CONNECT));
+    this.client.on('ready', () => console.log(REDIS_MESSAGES.READY));
+    this.client.on('reconnecting', () => console.log(REDIS_MESSAGES.RECONNECT));
+
+    this.client.on('close', () => console.log(REDIS_MESSAGES.CLOSE));
+    this.client.on('error', (err: Error) => console.error(REDIS_MESSAGES.ERROR, err));
     
     return this;
   }
