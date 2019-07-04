@@ -4,12 +4,12 @@
  */
 
 import * as AWS from 'aws-sdk';
+import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-import * as dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
-
 import { PutItemInput, PutItemInputAttributeMap, ScanInput, KeySchema, CreateTableInput, AttributeDefinitions, DeleteTableInput, ProvisionedThroughput } from 'aws-sdk/clients/dynamodb';
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
 const defaultThroughput: ProvisionedThroughput = {
   "ReadCapacityUnits": 1,

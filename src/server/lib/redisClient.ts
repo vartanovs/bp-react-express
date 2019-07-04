@@ -3,10 +3,10 @@
  * @description Redis Client
  */
 
+import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as Redis from 'ioredis';
 
-import * as dotenv from 'dotenv';
 import { REDIS_MESSAGES } from './constants';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
@@ -40,7 +40,7 @@ class RedisClient {
     return await amount === 1 ? this.client!.incr(key) : this.client!.incrby(key, amount);
   }
 
-  public async set(key: string, val: number|string|number[]|string[]) {
+  public async set(key: string, val: any) {
     return await this.client!.set(key, val);
   }
 }

@@ -1,15 +1,15 @@
 /**
  * @module __mocks__/ioredis.ts
- * @description Redis Automock
+ * @description ioredis automock
  */
 
 import { EventEmitter } from 'events';
 
 interface MockRedis extends EventEmitter {
-  get?: any;
-  incr?: any;
-  incrby?: any;
-  set?: any;
+  get?(key: string): Promise<string|null>;
+  incr?(key: string): Promise<number>;
+  incrby?(key: string, amount: number): Promise<string>;
+  set?(key: string, val: any): Promise<string>;
 }
 
 const mockRedis: MockRedis = new EventEmitter();

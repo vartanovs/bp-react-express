@@ -3,11 +3,12 @@
  * @description PostgreSQL Client
  */
 
+import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as pg from 'pg';
+
 import { PoolConfig } from 'pg';
 
-import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
 class PostgresClient {

@@ -9,17 +9,21 @@ describe('server/lib/mongoClient', () => {
   let consoleLogSpy: jasmine.Spy;
   let consoleErrorSpy: jasmine.Spy;
 
-  let mockMongo: any
+  let mockMongo: mongodb.MongoClient;
+  let mockMongoCollection: mongodb.Collection;
 
-  let mongoClient: any;
-  let mongoCollection: any;
+  let testMongoClient: any;
 
   const mockError = new Error('mock error');
+  const mockCollection = 'mockCollection';
+  const mockDb = 'mockDb';
+  const mockItem = { mock: 'item' };
+  const mockUrl = 'www.mock.url';
 
   beforeAll(async () => {
-    mockMongo = await mongodb.MongoClient.connect('');
-    mongoClient = await mongoClientInit;
-    mongoCollection = mockMongo.db().collection();
+    mockMongo = await mongodb.MongoClient.connect(mockUrl);
+    testMongoClient = await mongoClientInit;
+    mockMongoCollection = mockMongo.db(mockDb).collection(mockCollection);
   })
 
   describe('this.client.on()', () => {
@@ -41,15 +45,29 @@ describe('server/lib/mongoClient', () => {
 
   describe('.deleteAll()', () => {
     it('calls the .deleteMany() method on the mongo client', async () => {
-      await expect(mongoClient.deleteAll('hi')).resolves.not.toThrowError();
-      expect(mongoCollection.deleteMany).toHaveBeenCalled();
+      await expect(testMongoClient.deleteAll('hi')).resolves.not.toThrowError();
+      expect(mockMongoCollection.deleteMany).toHaveBeenCalled();
     });
   });
 
   describe('.findAll()', () => {
-    it('calls the .find() method on the mongo client', async () => {
-      await expect(mongoClient.findAll('hi')).resolves.not.toThrowError();
-      expect(mongoCollection.find).toHaveBeenCalled();
+    it('calls the .find() method and its .toArray() method on the mongo client', async () => {
+      await expect(testMongoClient.findAll(mockCollection)).resolves.not.toThrowError();
+      expect(mockMongoCollection.find).toHaveBeenCalledWith({});
+    });
+  });
+
+  describe('.insertOne()', () => {
+    it('calls the .insertOne() method on the mongo client and returns the item inserted', async () => {
+      await expect(testMongoClient.insertOne(mockCollection, mockItem)).resolves.toEqual([mockItem]);
+      expect(mockMongoCollection.insertOne).toHaveBeenCalledWith(mockItem);
+    });
+  });
+
+    describe('.insertMany()', () => {
+    it('calls the .insertMany() method on the mongo client and returns the items inserted', async () => {
+      await expect(testMongoClient.insertMany(mockCollection, [mockItem, mockItem])).resolves.toEqual([mockItem, mockItem]);
+      expect(mockMongoCollection.insertMany).toHaveBeenCalledWith([mockItem, mockItem]);
     });
   });
 });

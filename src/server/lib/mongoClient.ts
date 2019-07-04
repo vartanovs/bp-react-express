@@ -3,11 +3,12 @@
  * @description MongoDB Client
  */
 
+import * as dotenv from 'dotenv';
 import * as mongodb from 'mongodb';
 import * as path from 'path';
 
-import * as dotenv from 'dotenv';
 import { MONGO_MESSAGES } from './constants';
+
 dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
 
 class MongoClient {
@@ -46,7 +47,7 @@ class MongoClient {
     return insertedItem.ops;
   }
 
-  public async insertMany<T>(collectionName: string, items: T[]) {
+  public async insertMany<T>(collectionName: string, items: T[])  {
     const insertedItems = await this.db!.collection(collectionName).insertMany(items);
     return insertedItems.ops;
   }
