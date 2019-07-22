@@ -8,6 +8,11 @@ export enum MONGO_MESSAGES {
   ERROR = 'Mongo DB Error: ',
 }
 
+export enum POSTGRES_MESSAGES {
+  CONNECT = 'Connected to Postgress DB',
+  ERROR = 'Postgres DB Error: ',
+}
+
 export enum REDIS_MESSAGES {
   CONNECT = 'Connected to Redis Server',
   READY = 'Redis Server ready to receive commands',

@@ -25,10 +25,12 @@ app.get('/dynamo',
   async(_: Request, res: Response) => {
     const timeStampAttribute: AttributeDefinition = { "AttributeName": "now", "AttributeType": "S" };
     const timestampSchema: KeySchemaElement = { "AttributeName": "now", "KeyType": "HASH" };
-    await dynamoClient.createTable('timestamps', [timeStampAttribute], [timestampSchema]);
-    await dynamoClient.putItem('timestamps', {"now": { "S": new Date().toISOString() } })
-    const dynamoNow = await dynamoClient.getAll('timestamps')
-    await dynamoClient.deleteTable('timestamps');
+    await dynamoClient.createTable('TimeStamps', [timeStampAttribute], [timestampSchema]);
+    await dynamoClient.putItem('TimeStamps', {"now": { "S": new Date().toISOString() } })
+    const dynamoNow = await dynamoClient.getAll('TimeStamps')
+    const listTableRes = await dynamoClient.listTables();
+    console.log('List Tables', listTableRes);
+    await dynamoClient.deleteTable('TimeStamps');
     res.send(dynamoNow.Items!.pop());
   })
 

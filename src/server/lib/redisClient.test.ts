@@ -3,12 +3,11 @@ import * as Redis from 'ioredis';
 import redisClient from './redisClient';
 import { REDIS_MESSAGES } from './constants';
 
-jest.mock('ioredis');
-
 describe('server/lib/redisClient', () => {
   let consoleLogSpy: jasmine.Spy;
   let consoleErrorSpy: jasmine.Spy;
 
+  const mockCount = 2;
   const mockIncrementValue = 5;
   const mockKey = 'key';
   const mockValue = 'value';
@@ -50,27 +49,31 @@ describe('server/lib/redisClient', () => {
 
   describe('.get()', () => {
     it('calls the .get() method on the redis client', async () => {
-      await expect(redisClient.get(mockKey)).resolves.not.toThrowError();
+      jest.spyOn(mockRedis, 'get').mockImplementation(() => Promise.resolve(mockValue));
+      await expect(redisClient.get(mockKey)).resolves.toEqual(mockValue);
       expect(mockRedis.get).toHaveBeenCalledWith(mockKey);
     });
   });
 
   describe('.increment()', () => {
     it('calls the .incr() method on the redis client when not given an increment value', async () => {
-      await expect(redisClient.increment(mockKey)).resolves.not.toThrowError();
+      jest.spyOn(mockRedis, 'incr').mockImplementation(() => Promise.resolve(mockCount + 1));
+      await expect(redisClient.increment(mockKey)).resolves.toEqual(mockCount + 1);
       expect(mockRedis.incr).toHaveBeenCalledWith(mockKey);
 
     });
 
     it('calls the .incrby() method on the redis client when given an increment value', async () => {
-      await expect(redisClient.increment(mockKey, mockIncrementValue)).resolves.not.toThrowError();
+      jest.spyOn(mockRedis, 'incrby').mockImplementation(() => Promise.resolve(mockCount + mockIncrementValue));
+      await expect(redisClient.increment(mockKey, mockIncrementValue)).resolves.toEqual(mockCount + mockIncrementValue);
       expect(mockRedis.incrby).toHaveBeenCalledWith(mockKey, mockIncrementValue);
     });
   });
 
   describe('.set()', () => {
     it('calls the .set() method on the redis client', async () => {
-      await expect(redisClient.set(mockKey, mockValue)).resolves.not.toThrowError();
+      jest.spyOn(mockRedis, 'set').mockImplementation(() => Promise.resolve(mockValue));
+      await expect(redisClient.set(mockKey, mockValue)).resolves.toEqual(mockValue);
       expect(mockRedis.set).toHaveBeenCalledWith(mockKey, mockValue);
     });
   });

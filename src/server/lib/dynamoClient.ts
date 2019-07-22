@@ -9,7 +9,7 @@ import * as path from 'path';
 
 import { PutItemInput, PutItemInputAttributeMap, ScanInput, KeySchema, CreateTableInput, AttributeDefinitions, DeleteTableInput, ProvisionedThroughput } from 'aws-sdk/clients/dynamodb';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../.env/.env') });
 
 const defaultThroughput: ProvisionedThroughput = {
   "ReadCapacityUnits": 1,
@@ -47,7 +47,9 @@ class DynamoClient {
     const params: DeleteTableInput = {
       TableName: tableName,
     }
-    await this.client!.deleteTable(params).promise();
+
+    const response = await this.client!.deleteTable(params).promise();
+    return response;
   }
 
   public async listTables() {
@@ -70,7 +72,8 @@ class DynamoClient {
       Item: item,
     };
 
-    await this.client!.putItem(params).promise();
+    const response = await this.client!.putItem(params).promise();
+    return response;
   }
 };
 

@@ -9,7 +9,7 @@ import * as path from 'path';
 
 import { MONGO_MESSAGES } from './constants';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../.env/.env') });
 
 class MongoClient {
   // private config: mongodb.MongoClientOptions = {};

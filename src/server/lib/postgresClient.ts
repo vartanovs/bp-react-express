@@ -8,8 +8,9 @@ import * as path from 'path';
 import * as pg from 'pg';
 
 import { PoolConfig } from 'pg';
+import { POSTGRES_MESSAGES } from './constants';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../.env/.env') });
 
 class PostgresClient {
   private config: PoolConfig = {};
@@ -25,16 +26,14 @@ class PostgresClient {
 
     // Log Successful Connection or Error
     this.pool = new pg.Pool(this.config);
-    this.pool.on('connect', () => console.log('Connected to Postgres DB'));
-    this.pool.on('error', (err: Error) => console.error('Postgres DB Client Error: ', err));
-
-    console.log('Postgres DB Client Configuration Complete');
+    this.pool.on('connect', () => console.log(POSTGRES_MESSAGES.CONNECT));
+    this.pool.on('error', (err: Error) => console.error(POSTGRES_MESSAGES.ERROR, err));
     return this;
   }
 
   public async query(sqlStatement: string, sqlParams?: string[]) {
     const client = await this.pool!.connect();
-    const response = sqlParams? await client.query(sqlStatement, sqlParams) : await client.query(sqlStatement);
+    const response = sqlParams ? await client.query(sqlStatement, sqlParams) : await client.query(sqlStatement);
     client.release();
     return response;
   }

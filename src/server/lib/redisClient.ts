@@ -9,14 +9,14 @@ import * as Redis from 'ioredis';
 
 import { REDIS_MESSAGES } from './constants';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env/.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../.env/.env') });
 
 class RedisClient {
   private config: Redis.RedisOptions = {};
   private client: Redis.Redis|undefined;
 
   public init() {
-    // Extract postgres configuration from .env
+    // Extract redis configuration from .env
     this.config.host = process.env.REDIS_HOST;
     this.config.port = Number(process.env.REDIS_PORT);
 

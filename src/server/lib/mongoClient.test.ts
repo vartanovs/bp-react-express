@@ -3,8 +3,6 @@ import mongoClientInit from './mongoClient';
 import * as mongodb from 'mongodb';
 import { MONGO_MESSAGES } from './constants';
 
-jest.mock('mongodb');
-
 describe('server/lib/mongoClient', () => {
   let consoleLogSpy: jasmine.Spy;
   let consoleErrorSpy: jasmine.Spy;
@@ -45,27 +43,31 @@ describe('server/lib/mongoClient', () => {
 
   describe('.deleteAll()', () => {
     it('calls the .deleteMany() method on the mongo client', async () => {
-      await expect(testMongoClient.deleteAll('hi')).resolves.not.toThrowError();
-      expect(mockMongoCollection.deleteMany).toHaveBeenCalled();
+      jest.spyOn(mockMongoCollection, 'deleteMany').mockImplementationOnce(() => Promise.resolve({ result: [mockItem]}));
+      await expect(testMongoClient.deleteAll(mockCollection)).resolves.toEqual([mockItem]);
+      expect(mockMongoCollection.deleteMany).toHaveBeenCalledWith({});
     });
   });
 
   describe('.findAll()', () => {
     it('calls the .find() method and its .toArray() method on the mongo client', async () => {
-      await expect(testMongoClient.findAll(mockCollection)).resolves.not.toThrowError();
+      spyOn(mockMongoCollection, 'find').and.callFake(() => ({ toArray: () => Promise.resolve([mockItem]) }));
+      await expect(testMongoClient.findAll(mockCollection)).resolves.toEqual([mockItem]);
       expect(mockMongoCollection.find).toHaveBeenCalledWith({});
     });
   });
 
   describe('.insertOne()', () => {
     it('calls the .insertOne() method on the mongo client and returns the item inserted', async () => {
-      await expect(testMongoClient.insertOne(mockCollection, mockItem)).resolves.toEqual([mockItem]);
+      jest.spyOn(mockMongoCollection, 'insertOne').mockImplementationOnce(() => Promise.resolve({ ops: mockItem}));
+      await expect(testMongoClient.insertOne(mockCollection, mockItem)).resolves.toEqual(mockItem);
       expect(mockMongoCollection.insertOne).toHaveBeenCalledWith(mockItem);
     });
   });
 
     describe('.insertMany()', () => {
     it('calls the .insertMany() method on the mongo client and returns the items inserted', async () => {
+      jest.spyOn(mockMongoCollection, 'insertMany').mockImplementationOnce(() => Promise.resolve({ ops: [mockItem, mockItem]}));
       await expect(testMongoClient.insertMany(mockCollection, [mockItem, mockItem])).resolves.toEqual([mockItem, mockItem]);
       expect(mockMongoCollection.insertMany).toHaveBeenCalledWith([mockItem, mockItem]);
     });
